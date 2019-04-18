@@ -1,0 +1,19 @@
+{
+  "name": "andrew-sdc-data-generation",
+  "version": "1.0.0",
+  "description": "Repo to generate 10M data points for SDC",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/babbage-1/andrew-sdc-data-generation.git"
+  },
+  "author": "ANDREW CHUNG",
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/babbage-1/andrew-sdc-data-generation#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "faker": "^4.1.0"
+  }
+}
