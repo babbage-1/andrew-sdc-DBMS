@@ -12,8 +12,9 @@ const pool = new Pool({
   const client = await pool.connect();
 
   try {
+    // Transaction BEGIN!
     await client.query('BEGIN');
-
+    console.log('creating movieinfo table!');
     await client.query(`
       CREATE TABLE IF NOT EXISTS MovieInfo(
         name VARCHAR(150) NOT NULL,
@@ -27,16 +28,23 @@ const pool = new Pool({
         image VARCHAR(250) NOT NULL
         );
     `);
-    console.log('writing to database!');
 
+    console.log('writing to database!');
     const copyPath = path.join(__dirname, '../sdcData.csv');
     await client.query(`
       COPY MovieInfo FROM '${copyPath}' WITH (FORMAT CSV, HEADER);
     `);
 
-    console.log('done!');
+    console.log('adding movie index!');
+    await client.query(`
+      CREATE INDEX idx_movie ON movieinfo(name);
+    `);
+    // NOT CONCURRENTLY, NOT MULTI COLUMN (releaseyear)
 
+    console.log('commiting!');
     await client.query('COMMIT');
+    // Transaction END!
+
   } catch (e) {
     await client.query('ROLLBACK');
     console.log('error!');
