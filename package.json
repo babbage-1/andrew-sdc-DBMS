@@ -12,8 +12,8 @@
   "homepage": "https://github.com/babbage-1/andrew-sdc-data-generation#readme",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "gen:data": "node ./dataGenerator/dataGen.js",
-    "seed": "node ./database/index.js"
+    "write:data": "node --max-old-space-size=4096 ./dataGenerator/dataGen.js",
+    "seed": "node --max-old-space-size=4096 ./database/index.js"
   },
   "dependencies": {
     "aws-sdk": "^2.440.0",
