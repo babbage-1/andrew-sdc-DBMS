@@ -81,7 +81,7 @@ const writeCsv = async () => {
       });
       const randImgIndex = faker.random.number({
         min: 0,
-        max: 2,
+        max: 799,
       });
       const image = imgUrlList[randImgIndex];
       // console.log(name, genre, score, runtime, rating, releaseDay, releaseMonth, releaseYear, image);

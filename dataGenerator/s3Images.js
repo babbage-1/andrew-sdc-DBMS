@@ -4,7 +4,7 @@ const s3 = new AWS.S3();
 
 const params = {
   Bucket: 'sdc-andrew-movie-posters',
-  MaxKeys: 3,
+  MaxKeys: 800,
 };
 
 const listAllObjects = async () => {
@@ -25,7 +25,9 @@ const listAllObjects = async () => {
     console.log(e);
     return e;
   }
+  console.log(imgUrlArray);
   return imgUrlArray;
 };
 
+listAllObjects();
 module.exports = listAllObjects;
