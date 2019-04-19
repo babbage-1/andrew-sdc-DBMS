@@ -56,7 +56,7 @@ const writeCsv = async () => {
     const imgUrlList = await generateImgList();
 
     writer.pipe(fs.createWriteStream('sdcData.csv'));
-    for (let i = 0; i <= 10000; i += 1) {
+    for (let i = 1; i <= 1000000; i += 1) {
       const name = faker.lorem.words();
       const genre = genreGen();
       const score = faker.random.number({
