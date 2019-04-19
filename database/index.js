@@ -23,17 +23,26 @@ const pool = new Pool({
     await client.query('BEGIN');
 
     await client.query(`
-      CREATE TABLE account(
-        username VARCHAR(50) UNIQUE NOT NULL,
-        password VARCHAR(50) NOT NULL,
-        email VARCHAR(355) UNIQUE NOT NULL,
-        created_on TIMESTAMP NOT NULL,
-        last_login TIMESTAMP
+      CREATE TABLE IF NOT EXISTS MovieInfo(
+        name VARCHAR(150) NOT NULL,
+        genre VARCHAR(150) NOT NULL,
+        score INT NOT NULL,
+        runtime INT NOT NULL,
+        rating VARCHAR(10) NOT NULL,
+        releaseDay INT NOT NULL,
+        releaseMonth VARCHAR(20) NOT NULL,
+        releaseYear INT NOT NULL,
+        image VARCHAR(250) NOT NULL
         );
     `);
 
-    await client.query('COMMIT')
+    await client.query(`
+      COPY MovieInfo FROM '/Users/exitright/code/my_own/Capston_Projects/sdc/andrew-sdc-data-generation/sdcData.csv' WITH (FORMAT CSV, HEADER);
+    `);
 
+    console.log('writing to database!');
+
+    await client.query('COMMIT');
   } catch (e) {
     await client.query('ROLLBACK');
     console.log('error!');
