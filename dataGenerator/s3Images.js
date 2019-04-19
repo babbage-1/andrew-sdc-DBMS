@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-AWS.config.loadFromPath('../s3Config.json');
+AWS.config.loadFromPath('s3Config.json');
 const s3 = new AWS.S3();
 
 const params = {
