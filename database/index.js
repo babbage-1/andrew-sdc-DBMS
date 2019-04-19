@@ -19,12 +19,12 @@ const pool = new Pool({
       CREATE TABLE IF NOT EXISTS MovieInfo(
         name VARCHAR(150) NOT NULL,
         genre VARCHAR(150) NOT NULL,
-        score INT NOT NULL,
-        runtime INT NOT NULL,
+        score SMALLINT NOT NULL,
+        runtime SMALLINT NOT NULL,
         rating VARCHAR(10) NOT NULL,
-        releaseDay INT NOT NULL,
+        releaseDay SMALLINT NOT NULL,
         releaseMonth VARCHAR(20) NOT NULL,
-        releaseYear INT NOT NULL,
+        releaseYear SMALLINT NOT NULL,
         image VARCHAR(250) NOT NULL
         );
     `);
@@ -35,7 +35,7 @@ const pool = new Pool({
       COPY MovieInfo FROM '${copyPath}' WITH (FORMAT CSV, HEADER);
     `);
 
-    console.log('adding movie index!');
+    console.log('adding auto serial index column named "id"!');
     await client.query(`
       CREATE INDEX idx_movie ON movieinfo(name);
     `);
