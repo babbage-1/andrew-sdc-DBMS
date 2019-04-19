@@ -1,5 +1,5 @@
 const { Pool, Client } = require('pg');
-
+const path = require('path');
 const pool = new Pool({
   user: 'postgres',
   host: '127.0.0.1',
@@ -8,15 +8,7 @@ const pool = new Pool({
   port: 5432,
 });
 
-// pool.query('SELECT NOW()', (err, res) => {
-//   console.log('i did a query!');
-//   console.log(err, res);
-//   pool.end();
-// });
-
 (async () => {
-  // note: we don't try/catch this because if connecting throws an exception
-  // we don't need to dispose of the client (it will be undefined)
   const client = await pool.connect();
 
   try {
@@ -35,12 +27,14 @@ const pool = new Pool({
         image VARCHAR(250) NOT NULL
         );
     `);
+    console.log('writing to database!');
 
+    const copyPath = path.join(__dirname, '../sdcData.csv');
     await client.query(`
-      COPY MovieInfo FROM '/Users/exitright/code/my_own/Capston_Projects/sdc/andrew-sdc-data-generation/sdcData.csv' WITH (FORMAT CSV, HEADER);
+      COPY MovieInfo FROM '${copyPath}' WITH (FORMAT CSV, HEADER);
     `);
 
-    console.log('writing to database!');
+    console.log('done!');
 
     await client.query('COMMIT');
   } catch (e) {
@@ -48,7 +42,7 @@ const pool = new Pool({
     console.log('error!');
     throw e;
   } finally {
-    console.log('hello?');
+    console.log('releasing...');
     client.release();
   }
 })().catch(e => console.error(e.stack));
