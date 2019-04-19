@@ -8,10 +8,12 @@ const pool = new Pool({
   port: 5432,
 });
 
+
 (async () => {
   const client = await pool.connect();
 
   try {
+    console.time('timing seed');
     // Transaction BEGIN!
     await client.query('BEGIN');
     console.log('creating movieinfo table!');
@@ -37,14 +39,14 @@ const pool = new Pool({
 
     console.log('adding auto serial index column named "id"!');
     await client.query(`
-      CREATE INDEX idx_movie ON movieinfo(name);
+      ALTER TABLE movieinfo ADD COLUMN id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY;
     `);
     // NOT CONCURRENTLY, NOT MULTI COLUMN (releaseyear)
 
     console.log('commiting!');
     await client.query('COMMIT');
     // Transaction END!
-
+    console.timeEnd('timing seed');
   } catch (e) {
     await client.query('ROLLBACK');
     console.log('error!');
