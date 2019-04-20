@@ -11,7 +11,7 @@
   "license": "UNLICENSED",
   "homepage": "https://github.com/babbage-1/andrew-sdc-data-generation#readme",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "write:sampleData": "node ./dataSampleGenerator/writeSampleData.js",
     "write:postgresql": "node --max-old-space-size=4096 ./dataGenerator/writePGSQL.js",
     "write:cassandra": "node --max-old-space-size=4096 ./dataGenerator/writeCassandra.js",
     "seed:postgresql": "node --max-old-space-size=4096 ./database/seedPostgreSQL.js"
