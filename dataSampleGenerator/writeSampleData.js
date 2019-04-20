@@ -1,4 +1,10 @@
 const { writeSampleCsv } = require('./dataSampleGen');
 
-writeSampleCsv('cassandra');
-writeSampleCsv('postgresql');
+(async () => {
+  try {
+    await writeSampleCsv('cassandra');
+    await writeSampleCsv('postgresql');
+  } catch (e) {
+    console.log(e);
+  }
+})();
