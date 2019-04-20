@@ -48,9 +48,8 @@ const ratingGen = () => {
   return ratingObj[ratingIndex];
 };
 
-const writer = csvWriter();
-
 const writeSampleCsv = async (dbString) => {
+  const writer = csvWriter();
   try {
     console.time(`write ${dbString} sample 100 data`);
     const imgUrlList = await generateSampleImgList();
@@ -122,7 +121,7 @@ const writeSampleCsv = async (dbString) => {
     console.log(e);
     return e;
   } finally {
-    console.timeEnd(`write ${dbString} sample data`);
+    console.timeEnd(`write ${dbString} sample 100 data`);
   }
 };
 
