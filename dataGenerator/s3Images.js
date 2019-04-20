@@ -25,7 +25,6 @@ const listAllObjects = async () => {
     console.log(e);
     return e;
   }
-  console.log(imgUrlArray);
   return imgUrlArray;
 };
 
