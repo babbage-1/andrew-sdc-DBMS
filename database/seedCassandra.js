@@ -5,10 +5,18 @@ const client = new cassandra.Client({
   localDataCenter: 'datacenter1',
 });
 
-client.connect((err) => {
-  if (err) {
-    console.log(err);
-    throw err;
+async function connectCassandra() {
+  try {
+    await client.connect();
+    console.log('Connected to cluster with %d host(s): %j', client.hosts.length, client.hosts.keys());
+    client.hosts.forEach((host) => {
+      console.log(host.address, host.datacenter, host.rack, host.isUp(), host.canBeConsideredAsUp());
+    });
+    await client.shutdown();
+    console.log('client shutdown');
+  } catch (e) {
+    console.log(e);
+    throw e;
   }
-  console.log('connected to cassandra!');
-});
+}
+connectCassandra();
