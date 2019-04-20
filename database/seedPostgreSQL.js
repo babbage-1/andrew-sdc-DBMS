@@ -32,7 +32,7 @@ const pool = new Pool({
     `);
 
     console.log('writing to database!');
-    const copyPath = path.join(__dirname, '../sdcData.csv');
+    const copyPath = path.join(__dirname, '../sdc-postgresql-data.csv');
     await client.query(`
       COPY MovieInfo FROM '${copyPath}' WITH (FORMAT CSV, HEADER);
     `);
