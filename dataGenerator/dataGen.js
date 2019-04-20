@@ -51,11 +51,66 @@ const ratingGen = () => {
 
 const writer = csvWriter();
 
-const writeCsv = async () => {
+// const writeCsv = async () => {
+//   try {
+//     const imgUrlList = await generateImgList();
+
+//     writer.pipe(fs.createWriteStream('sdcData.csv'));
+//     for (let i = 1; i <= 10000000; i += 1) {
+//       const name = faker.lorem.words();
+//       const genre = genreGen();
+//       const score = faker.random.number({
+//         min: 1,
+//         max: 5,
+//       });
+//       const runtime = faker.random.number({
+//         min: 70,
+//         max: 200,
+//       });
+//       const rating = ratingGen();
+//       const releaseMonth = faker.date.month({
+//         type: 'wide',
+//       });
+//       const releaseDay = faker.random.number({
+//         min: 1,
+//         max: 28,
+//       });
+//       const releaseYear = faker.random.number({
+//         min: 1960,
+//         max: 2020,
+//       });
+//       const randImgIndex = faker.random.number({
+//         min: 0,
+//         max: 799,
+//       });
+//       const image = imgUrlList[randImgIndex];
+//       // console.log(name, genre, score, runtime, rating, releaseDay, releaseMonth, releaseYear, image);
+//       writer.write({
+//         name,
+//         genre,
+//         score,
+//         runtime,
+//         rating,
+//         releaseDay,
+//         releaseMonth,
+//         releaseYear,
+//         image,
+//       });
+//     }
+//     writer.end();
+//     return console.log('done writing!');
+//   } catch (e) {
+//     console.log(e);
+//     return e;
+//   }
+// };
+
+
+const writeCsv = async (dbString) => {
   try {
     const imgUrlList = await generateImgList();
 
-    writer.pipe(fs.createWriteStream('sdcData.csv'));
+    writer.pipe(fs.createWriteStream(`sdc-${dbString}-data.csv`));
     for (let i = 1; i <= 10000000; i += 1) {
       const name = faker.lorem.words();
       const genre = genreGen();
@@ -84,18 +139,37 @@ const writeCsv = async () => {
         max: 799,
       });
       const image = imgUrlList[randImgIndex];
+      let dataObj;
+
+      if (dbString === 'postgresql') {
+        dataObj = {
+          name,
+          genre,
+          score,
+          runtime,
+          rating,
+          releaseDay,
+          releaseMonth,
+          releaseYear,
+          image,
+        };
+      }
+      if (dbString === 'cassandra') {
+        dataObj = {
+          id: i,
+          name,
+          genre,
+          score,
+          runtime,
+          rating,
+          releaseDay,
+          releaseMonth,
+          releaseYear,
+          image,
+        };
+      }
       // console.log(name, genre, score, runtime, rating, releaseDay, releaseMonth, releaseYear, image);
-      writer.write({
-        name,
-        genre,
-        score,
-        runtime,
-        rating,
-        releaseDay,
-        releaseMonth,
-        releaseYear,
-        image,
-      });
+      writer.write(dataObj);
     }
     writer.end();
     return console.log('done writing!');
@@ -105,4 +179,6 @@ const writeCsv = async () => {
   }
 };
 
-writeCsv();
+module.exports = {
+  writeCsv,
+};
