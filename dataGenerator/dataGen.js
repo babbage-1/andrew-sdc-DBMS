@@ -48,10 +48,7 @@ const ratingGen = () => {
   return ratingObj[ratingIndex];
 };
 
-
 const writer = csvWriter();
-
-
 
 const writeCsv = async (dbString) => {
   try {
