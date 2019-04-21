@@ -1,15 +1,14 @@
-const { Pool, Client } = require('pg');
+const { Pool } = require('pg');
 const path = require('path');
 const pool = new Pool({
   user: 'postgres',
   host: '127.0.0.1',
-  database: 'mydb',
+  database: 'sdcandrew',
   password: '',
   port: 5432,
 });
 
-
-(async () => {
+const seedPostgres = async () => {
   const client = await pool.connect();
 
   try {
@@ -32,6 +31,8 @@ const pool = new Pool({
     `);
 
     console.log('writing to database!');
+
+
     const copyPath = path.join(__dirname, '../sdc-postgresql-data.csv');
     await client.query(`
       COPY MovieInfo FROM '${copyPath}' WITH (FORMAT CSV, HEADER);
@@ -55,4 +56,6 @@ const pool = new Pool({
     console.log('releasing...');
     client.release();
   }
-})().catch(e => console.error(e.stack));
+};
+
+seedPostgres().catch(e => console.error(e.stack));
