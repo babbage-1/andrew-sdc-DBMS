@@ -23,7 +23,9 @@ connectAndCheckCassandra();
 
 async function seedCassandra() {
   try {
-    const createTablespaceQuery = "CREATE KEYSPACE IF NOT EXISTS sdcandrew WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 1}";
+    const createTablespaceQuery = `
+    CREATE KEYSPACE IF NOT EXISTS sdcandrew
+    WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 1}`;
 
     const createTable = `
       CREATE TABLE IF NOT EXISTS movieInfo (
@@ -32,29 +34,38 @@ async function seedCassandra() {
       genre varchar,
       score smallint,
       runtime smallint,
+      rating varchar,
       releaseDay smallint,
       releaseMonth varchar,
       releaseYear smallint,
       image varchar,
-      PRIMARY KEY (id)
+      PRIMARY KEY (id, score)
     )`;
-
-    const copyCSV = `
-    COPY movieInfo (id, name, genre, score, runtime, releaseDay, releaseMonth, releaseYear, image) FROM '../sdc-sample-cassandra-data.csv' WITH HEADER = TRUE
-    `;
-
+    // WITH CLUSTERING ORDER BY(id ASC)
     await client.execute(createTablespaceQuery);
     await client.execute('USE sdcandrew');
     await client.execute(createTable);
-
-
   } catch (e) {
     console.log(e);
-    await client.shutdown();
-    console.log('client shutdown');
   } finally {
     await client.shutdown();
     console.log('client shutdown');
   }
 }
 seedCassandra();
+
+/*
+CAN'T USE cqlsh commands in node! Have to copy this command in cqlsh within bash!
+
+  ** For Sample Data Seed**
+  COPY movieinfo (id, name, genre, score, runtime, rating, releaseDay, releaseMonth, releaseYear, image) FROM '~/code/my_own/Capston_Projects/sdc/andrew-sdc-data-generation/sdc-sample-cassandra-data.csv' WITH HEADER = TRUE;
+
+  ** For 10M Data Seed **
+    COPY movieinfo (id, name, genre, score, runtime, rating, releaseDay, releaseMonth, releaseYear, image) FROM '~/code/my_own/Capston_Projects/sdc/andrew-sdc-data-generation/sdc-cassandra-data.csv' WITH HEADER = TRUE;
+*/
+
+/*
+COPY movieinfo(id, name, genre, score, runtime, rating, releaseDay, releaseMonth, releaseYear, image) FROM '~/code/my_own/Capston_Projects/sdc/andrew-sdc-data-generation/sdc-sample-cassandra-data.csv' WITH HEADER = TRUE;
+
+
+*/
