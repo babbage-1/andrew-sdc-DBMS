@@ -11,6 +11,7 @@
   "license": "UNLICENSED",
   "homepage": "https://github.com/babbage-1/andrew-sdc-data-generation#readme",
   "scripts": {
+    "test": "jest",
     "write:sampleData": "node ./dataSampleGenerator/writeSampleData.js",
     "write:postgresql": "node --max-old-space-size=4096 ./dataGenerator/writePGSQL.js",
     "write:cassandra": "node --max-old-space-size=4096 ./dataGenerator/writeCassandra.js",
@@ -24,5 +25,8 @@
     "csv-write-stream": "^2.0.0",
     "faker": "^4.1.0",
     "pg": "^7.10.0"
+  },
+  "devDependencies": {
+    "jest": "^24.7.1"
   }
 }
