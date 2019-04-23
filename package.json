@@ -15,7 +15,8 @@
     "write:postgresql": "node --max-old-space-size=4096 ./dataGenerator/writePGSQL.js",
     "write:cassandra": "node --max-old-space-size=4096 ./dataGenerator/writeCassandra.js",
     "seed:postgresql": "node --max-old-space-size=4096 ./database/seedPostgreSQL.js",
-    "seed:cassandra": "$HOME/code/apache-cassandra-3.11.4/bin/cqlsh -f ~/code/my_own/Capston_Projects/sdc/andrew-sdc-data-generation/cassandra.cql"
+    "seed:cassandra": "$HOME/code/apache-cassandra-3.11.4/bin/cqlsh 127.0.0.1 -f ~/code/my_own/Capston_Projects/sdc/andrew-sdc-data-generation/cassandra.cql",
+    "seed:cassandraSample": "$HOME/code/apache-cassandra-3.11.4/bin/cqlsh 127.0.0.1 -f ~/code/my_own/Capston_Projects/sdc/andrew-sdc-data-generation/cassandra-sample.cql"
   },
   "dependencies": {
     "aws-sdk": "^2.440.0",

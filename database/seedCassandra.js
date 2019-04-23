@@ -55,13 +55,14 @@ async function seedCassandra() {
 seedCassandra();
 
 /*
-CAN'T USE cqlsh commands in node! Have to copy this command in cqlsh within bash! use npm script "seed:cassandra"
+  CAN'T USE cqlsh commands in node! Have to copy this command in cqlsh within bash! use npm script "seed:cassandra" or "seed:cassandraSample"
 
-SEE cassandra.cql for list of commands used, COPY command used shown below
+  SEE cassandra.cql or cassandra-sample.cql for list of commands used, COPY command used shown below
 
   ** For Sample Data Seed **
-  COPY movieinfo (id, name, genre, score, runtime, rating, releaseDay, releaseMonth, releaseYear, image) FROM '~/code/my_own/Capston_Projects/sdc/andrew-sdc-data-generation/sdc-sample-cassandra-data.csv' WITH HEADER = TRUE;
+  COPY testmovieinfo(id, name, genre, score, runtime, rating, releaseDay, releaseMonth, releaseYear, image) FROM '~/code/my_own/Capston_Projects/sdc/andrew-sdc-data-generation/sdc-sample-cassandra-data.csv' WITH HEADER = TRUE AND NUMPROCESSES = 10 AND CHUNKSIZE = 1000 AND MAXBATCHSIZE = 15;
 
   ** For 10M Data Seed **
-  COPY movieinfo(id, name, genre, score, runtime, rating, releaseDay, releaseMonth, releaseYear, image) FROM '~/code/my_own/Capston_Projects/sdc/andrew-sdc-data-generation/sdc-cassandra-data.csv' WITH HEADER = TRUE AND NUMPROCESSES = 8 AND CHUNKSIZE = 1500 AND MAXBATCHSIZE = 100;
+  COPY movieinfo(id, name, genre, score, runtime, rating, releaseDay, releaseMonth, releaseYear, image) FROM '~/code/my_own/Capston_Projects/sdc/andrew-sdc-data-generation/sdc-cassandra-data.csv' WITH HEADER = TRUE AND NUMPROCESSES = 10 AND CHUNKSIZE = 1000 AND MAXBATCHSIZE = 15;
+
 */
