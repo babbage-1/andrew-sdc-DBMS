@@ -51,11 +51,11 @@ const ratingGen = () => {
 const writeSampleCsv = async (dbString) => {
   const writer = csvWriter();
   try {
-    console.time(`write ${dbString} sample 100,000 data`);
+    console.time(`write ${dbString} sample 1,000,000 data`);
     const imgUrlList = await generateSampleImgList();
 
     writer.pipe(fs.createWriteStream(`sdc-sample-${dbString}-data.csv`));
-    for (let i = 1; i <= 100000; i += 1) {
+    for (let i = 1; i <= 1000000; i += 1) {
       const name = faker.lorem.words();
       const genre = genreGen();
       const score = faker.random.number({
@@ -121,7 +121,7 @@ const writeSampleCsv = async (dbString) => {
     console.log(e);
     return e;
   } finally {
-    console.timeEnd(`write ${dbString} sample 100,000 data`);
+    console.timeEnd(`write ${dbString} sample 1,000,000 data`);
   }
 };
 
