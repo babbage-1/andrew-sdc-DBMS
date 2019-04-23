@@ -1,3 +1,6 @@
+/* eslint-disable block-scoped-var */
+/* eslint-disable vars-on-top */
+/* eslint-disable no-var */
 const cassandra = require('cassandra-driver');
 
 const client = new cassandra.Client({
@@ -19,7 +22,6 @@ async function connectAndCheckCassandra() {
     console.log(e);
     throw e;
   } finally {
-
     await client.shutdown();
     console.log('client shutdown');
     var tEnd = process.hrtime(t);
@@ -27,3 +29,10 @@ async function connectAndCheckCassandra() {
   }
 }
 connectAndCheckCassandra();
+
+function sum(a, b) {
+  return a + b;
+}
+test('adds 1 + 2 to equal 3', () => {
+  expect(sum(1, 2)).toBe(3);
+});
