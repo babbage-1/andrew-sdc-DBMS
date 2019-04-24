@@ -17,8 +17,7 @@
     "write:cassandra": "node --max-old-space-size=4096 ./dataGenerator/writeCassandra.js",
     "seed:postgresql": "node --max-old-space-size=4096 ./seed_database/seedPostgreSQL.js",
     "seed:cassandra": "cqlsh 127.0.0.1 9042 -f ./cassandra.cql",
-    "seed:cassandraSample": "cqlsh 127.0.0.1 9042 -f ./cassandra-sample.cql",
-    "can": "cqlsh 127.0.0.1 9042 use sdc_andrew"
+    "seed:cassandraSample": "cqlsh 127.0.0.1 9042 -f ./cassandra-sample.cql"
   },
   "dependencies": {
     "aws-sdk": "^2.440.0",
