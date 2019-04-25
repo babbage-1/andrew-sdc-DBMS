@@ -1,4 +1,4 @@
 node_modules/
 s3Config.json
 *.csv
-
+.env
