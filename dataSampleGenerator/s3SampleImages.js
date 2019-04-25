@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-AWS.config.loadFromPath('s3Config.json');
+AWS.config.loadFromPath('../s3Config.json');
 const s3 = new AWS.S3();
 
 const params = {
@@ -8,10 +8,10 @@ const params = {
 };
 
 const listAllObjects = async () => {
-  const imgUrlArray = [];
+  let imgUrlArray = [];
   try {
     const data = await s3.listObjectsV2(params).promise();
-    data.Contents.forEach((elem) => {
+    imgUrlArray = data.Contents.map((elem) => {
       let key = elem.Key;
       for (let i = 0; i < key.length; i += 1) {
         if (key[i] === ' ') {
@@ -19,7 +19,7 @@ const listAllObjects = async () => {
         }
       }
       const url = `https://s3.us-east-2.amazonaws.com/sdc-andrew-movie-posters/${key}`;
-      imgUrlArray.push(url);
+      return url;
     });
   } catch (e) {
     console.log(e);
@@ -28,5 +28,4 @@ const listAllObjects = async () => {
   return imgUrlArray;
 };
 
-listAllObjects();
 module.exports = listAllObjects;
