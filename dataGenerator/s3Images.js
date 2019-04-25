@@ -28,5 +28,4 @@ const listAllObjects = async () => {
   return imgUrlArray;
 };
 
-listAllObjects();
 module.exports = listAllObjects;
