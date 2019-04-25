@@ -1,7 +1,7 @@
 const fs = require('fs');
 const csvWriter = require('csv-write-stream');
 const faker = require('faker');
-const generateImgList = require('./s3Images.js');
+const generateSampleImgList = require('./s3SampleImages');
 
 const genreGen = () => {
   const genreObj = {
@@ -48,15 +48,14 @@ const ratingGen = () => {
   return ratingObj[ratingIndex];
 };
 
-const writer = csvWriter();
-
-const writeCsv = async (dbString) => {
+const writeSampleCsv = async (dbString) => {
+  const writer = csvWriter();
   try {
-    console.time(`write ${dbString} data`);
-    const imgUrlList = await generateImgList();
+    console.time(`write ${dbString} sample 1,000,000 data`);
+    const imgUrlList = await generateSampleImgList();
 
-    writer.pipe(fs.createWriteStream(`sdc-${dbString}-data.csv`));
-    for (let i = 1; i <= 10000000; i += 1) {
+    writer.pipe(fs.createWriteStream(`sdc-sample-${dbString}-data.csv`));
+    for (let i = 1; i <= 1000000; i += 1) {
       const name = faker.lorem.words();
       const genre = genreGen();
       const score = faker.random.number({
@@ -81,7 +80,7 @@ const writeCsv = async (dbString) => {
       });
       const randImgIndex = faker.random.number({
         min: 0,
-        max: 799,
+        max: 2,
       });
       const image = imgUrlList[randImgIndex];
       let dataObj;
@@ -122,10 +121,10 @@ const writeCsv = async (dbString) => {
     console.log(e);
     return e;
   } finally {
-    console.timeEnd(`write ${dbString} data`);
+    console.timeEnd(`write ${dbString} sample 1,000,000 data`);
   }
 };
 
 module.exports = {
-  writeCsv,
+  writeSampleCsv,
 };

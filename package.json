@@ -11,15 +11,23 @@
   "license": "UNLICENSED",
   "homepage": "https://github.com/babbage-1/andrew-sdc-data-generation#readme",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "write:data": "node --max-old-space-size=4096 ./dataGenerator/dataGen.js",
-    "seed:postgres": "node --max-old-space-size=4096 ./database/index.js"
+    "test": "jest",
+    "write:sampleData": "node ./dataSampleGenerator/writeSampleData.js",
+    "write:postgresql": "node --max-old-space-size=4096 ./dataGenerator/writePGSQL.js",
+    "write:cassandra": "node --max-old-space-size=4096 ./dataGenerator/writeCassandra.js",
+    "seed:postgresql": "node --max-old-space-size=4096 ./seed_database/seedPostgreSQL.js",
+    "seed:cassandra": "cqlsh 127.0.0.1 9042 -f ./cassandra.cql",
+    "seed:cassandraSample": "cqlsh 127.0.0.1 9042 -f ./cassandra-sample.cql"
   },
   "dependencies": {
     "aws-sdk": "^2.440.0",
+    "cassandra-driver": "^4.0.0",
     "csv-write-stream": "^2.0.0",
+    "dotenv": "^7.0.0",
     "faker": "^4.1.0",
-    "pg": "^7.10.0",
-    "uuid": "^3.3.2"
+    "pg": "^7.10.0"
+  },
+  "devDependencies": {
+    "jest": "^24.7.1"
   }
 }
