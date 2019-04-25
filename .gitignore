@@ -1,7 +1,4 @@
 node_modules/
 s3Config.json
-sdcData.csv
-sdc-postgresql-data.csv
-sdc-cassandra-data.csv
-sdc-sample-postgresql-data.csv
-sdc-sample-cassandra-data.csv
+*.csv
+
