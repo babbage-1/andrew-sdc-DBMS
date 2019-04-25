@@ -1,12 +1,7 @@
 const { Pool } = require('pg');
 const path = require('path');
-const pool = new Pool({
-  user: 'postgres',
-  host: '127.0.0.1',
-  database: 'sdcandrew',
-  password: '',
-  port: 5432,
-});
+const { config } = require('./config');
+const pool = new Pool(config);
 
 const seedPostgres = async () => {
   const client = await pool.connect();
