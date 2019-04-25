@@ -1,9 +1,12 @@
+/* eslint-disable global-require */
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({ path: './amazon.env' });
+}
 const AWS = require('aws-sdk');
-AWS.config.loadFromPath('../s3Config.json');
 const s3 = new AWS.S3();
 
 const params = {
-  Bucket: 'sdc-andrew-movie-posters',
+  Bucket: process.env.BUCKET || 'sdc-andrew-movie-posters',
   MaxKeys: 800,
 };
 
@@ -18,7 +21,8 @@ const listAllObjects = async () => {
           key = `${key.slice(0, i)}+${key.slice(i + 1)}`;
         }
       }
-      const url = `https://s3.us-east-2.amazonaws.com/sdc-andrew-movie-posters/${key}`;
+
+      const url = `${process.env.IMG_HOST}${key}`;
       return url;
     });
   } catch (e) {
